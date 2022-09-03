@@ -12,17 +12,21 @@ export default async function createCardsService(data: {
   cardType: TransactionTypes;
   isVirtual: boolean;
 }) {
+
   if (!data.apiKey) {
     throw { code: "unauthorized" }
   }
+
   const company = await findByApiKey(data.apiKey)
   const employe = await findById(data.employeId)
   const card = await findByTypeAndEmployeeId(data.cardType, data.employeId)
 
-  if (!company || !employe) {
+  if (!company) {
     throw { code: "unauthorized" }
   }
-
+  if (!employe) {
+    throw { code: "notFound" }
+  }
   if (card) {
     throw { code: "conflict" }
   }
@@ -31,7 +35,7 @@ export default async function createCardsService(data: {
   const cardName: string = generateCardName(allName)
   const cardNumber: string = generateCardNumber()
   const expirationDate: string = generateExpirationDate()
-  const cvc: string = generateCardCVC(employe.cpf)
+  const { cvc, cvcEncrypted }: { cvc: string; cvcEncrypted: string } = generateCardCVC(employe.cpf)
 
   await insert(
     {
@@ -40,11 +44,15 @@ export default async function createCardsService(data: {
       expirationDate: expirationDate,
       isBlocked: true,
       isVirtual: data.isVirtual,
-      securityCode: cvc,
+      securityCode: cvcEncrypted,
       number: cardNumber,
       type: data.cardType,
     }
   )
 
-  return;
+  return { 
+    name: cardName, 
+    number: cardNumber, 
+    cvc: cvc 
+  };
 }

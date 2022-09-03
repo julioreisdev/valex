@@ -1,0 +1,1 @@
+/* Houve uma falha ao implementar o middleware de erro */

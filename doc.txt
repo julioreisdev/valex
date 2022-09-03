@@ -1,0 +1,11 @@
+Criação de cartão:
+
+    No headers:
+    x-api-key
+
+    No body:
+    {
+        "employeId": number,
+        "cardType": string,
+        "isVirtual": boolean
+    }
