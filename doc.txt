@@ -34,3 +34,26 @@ Bloquear ou desbloquear cartão:
         "cardId": 8,
         "password": "1234"
     }
+
+________________________________
+
+Recarga:
+
+    No headers:
+    x-api-key
+
+    {
+        "cardId": number,
+        "value" number
+    }
+
+________________________________
+
+Compra:
+
+    {
+        "cardId": number,
+        "password": string,
+        "amount": number,
+        "businessId": number
+    }

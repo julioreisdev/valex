@@ -1,23 +1,19 @@
 import { Card, findById } from "../repositories/cardRepository"
-import { findByCardId as findByCardIdTransactions, PaymentWithBusinessName } from "../repositories/paymentRepository"
-import { findByCardId, Recharge } from "../repositories/rechargeRepository"
+import { PaymentWithBusinessName } from "../repositories/paymentRepository"
+import { Recharge } from "../repositories/rechargeRepository"
+import balance from "./balance"
 
 export async function balanceService(id: number) {
-    const transactions: PaymentWithBusinessName[] = await findByCardIdTransactions(id)
-    const recharges: Recharge[] = await findByCardId(id)
-    const card: Card = await findById(id)
-    let balance: number = 0
+  const card: Card = await findById(id)
+  const balanceValue: {
+    balance: number,
+    transactions: PaymentWithBusinessName[],
+    recharges: Recharge[]
+  } = await balance(id)
 
-    transactions.map((t) => {
-        balance = balance - t.amount
-    })
-    recharges.map((r) => {
-        balance = balance + r.amount
-    })
+  if (!card) {
+    throw { code: "notFound" }
+  }
 
-    if (!card) {
-        throw {code: "notFound"}
-    }
-
-    return {balance, transactions, recharges}
+  return balanceValue
 }
