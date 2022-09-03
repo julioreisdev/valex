@@ -9,3 +9,28 @@ Criação de cartão:
         "cardType": string,
         "isVirtual": boolean
     }
+________________________________
+
+Ativação de cartão:
+
+    {
+        "employeId": number,
+        "cardType": string,
+        "cvc": string,
+        "password": string
+    }
+
+_________________________________
+
+Saldo:
+
+    /balance/:cardId
+
+_________________________________
+
+Bloquear ou desbloquear cartão:
+
+    {
+        "cardId": 8,
+        "password": "1234"
+    }
