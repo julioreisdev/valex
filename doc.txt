@@ -1,4 +1,4 @@
-Criação de cartão:
+Criação de cartão: post -> /cards
 
     No headers:
     x-api-key
@@ -11,7 +11,7 @@ Criação de cartão:
     }
 ________________________________
 
-Ativação de cartão:
+Ativação de cartão: post -> /activate
 
     {
         "employeId": number,
@@ -22,13 +22,14 @@ Ativação de cartão:
 
 _________________________________
 
-Saldo:
-
-    /balance/:cardId
+Saldo: get -> /balance/:cardId
 
 _________________________________
 
-Bloquear ou desbloquear cartão:
+Bloquear ou desbloquear cartão: 
+
+    para bloquear: post -> /block
+    para desbloquear: post -> /unblock
 
     {
         "cardId": 8,
@@ -37,7 +38,7 @@ Bloquear ou desbloquear cartão:
 
 ________________________________
 
-Recarga:
+Recarga: post -> /recharge
 
     No headers:
     x-api-key
@@ -49,7 +50,7 @@ Recarga:
 
 ________________________________
 
-Compra:
+Compra: post -> /buy
 
     {
         "cardId": number,
